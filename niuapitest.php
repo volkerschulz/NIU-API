@@ -56,7 +56,18 @@
     echo 'Loading battery info for first listed vehicle...' . PHP_EOL;
     $data = NiuApi::get_battery_info();
     echo "\tRemaining est. mileage {$data->estimatedMileage} km; battery is " . ($data->isCharging ? '' : 'not ') . "charging" . PHP_EOL;
-    echo "\tThe following properties are available for overall tally: " . implode(', ', array_keys((array) $data)) . PHP_EOL;
+    echo "\tThe following properties are available for battery info: " . implode(', ', array_keys((array) $data)) . PHP_EOL;
+
+    echo PHP_EOL;
+    echo 'Loading battery health info for first listed vehicle...' . PHP_EOL;
+    $data = NiuApi::get_battery_health();
+    if (property_exists($data, 'batteries')) {
+        if (property_exists($data->batteries, 'compartmentA'))
+            echo "\tBattery A has been charged {$data->batteries->compartmentA->healthRecords[0]->chargeCount} times which results in a grade of {$data->batteries->compartmentA->gradeBattery}%" . PHP_EOL;
+        if (property_exists($data->batteries, 'compartmentB'))
+            echo "\tBattery B has been charged {$data->batteries->compartmentB->healthRecords[0]->chargeCount} times which results in a grade of {$data->batteries->compartmentB->gradeBattery}%" . PHP_EOL;
+    }
+    echo "\tThe following properties are available for battery health: " . implode(', ', array_keys((array) $data)) . PHP_EOL;
 
     echo PHP_EOL;
     echo 'Loading latest available tracks (max 10) for first listed vehicle...' . PHP_EOL;

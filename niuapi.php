@@ -39,6 +39,12 @@ class NiuApi {
             return false;
         return self::return_response_data(new UrlRequest(self::API_BASE_URL . '/v3/motor_data/battery_info?sn=' . self::$serial_no, null, self::$token));
     }
+    
+    public static function get_battery_health() {
+        if (self::$token === null || self::$serial_no === null)
+            return false;
+        return self::return_response_data(new UrlRequest(self::API_BASE_URL . '/v3/motor_data/battery_info/health?sn=' . self::$serial_no, null, self::$token));
+    }
 
     public static function get_tracks_available($limit = 100, $offset = 0) {
         if (self::$token === null || self::$serial_no === null)
@@ -51,6 +57,8 @@ class NiuApi {
             return false;
         return self::return_response_data(new UrlRequest(self::API_BASE_URL . '/motoinfo/track/detail', ['sn' => self::$serial_no, 'trackId' => $track_id, 'date' => $track_date], self::$token));
     }
+    
+    
 
     private static function return_response_data($data) {
         if (is_object($data) && property_exists($data, 'response') && property_exists($data->response, 'status') && $data->response->status !== 0) {
