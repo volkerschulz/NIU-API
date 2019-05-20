@@ -5,8 +5,8 @@ class NiuApi {
     public static $token = null;
     public static $serial_no = null;
 
-    private const API_BASE_URL = 'https://app-api.niu.com';
-    private const ACCOUNT_BASE_URL = 'https://account.niu.com';
+    const API_BASE_URL = 'https://app-api.niu.com';
+    const ACCOUNT_BASE_URL = 'https://account.niu.com';
 
     public static function get_token($email, $password, $country_code) {
         $data = new UrlRequest(self::ACCOUNT_BASE_URL . '/appv2/login', array('account' => $email, 'countryCode' => $country_code, 'password' => $password));
@@ -58,6 +58,11 @@ class NiuApi {
         return self::return_response_data(new UrlRequest(self::API_BASE_URL . '/motoinfo/track/detail', ['sn' => self::$serial_no, 'trackId' => $track_id, 'date' => $track_date], self::$token));
     }
     
+    public static function get_firmware_version() {
+        if (self::$token === null || self::$serial_no === null)
+            return false;
+        return self::return_response_data(new UrlRequest(self::API_BASE_URL . '/motorota/getfirmwareversion', ['sn' => self::$serial_no], self::$token));
+    }    
     
 
     private static function return_response_data($data) {
