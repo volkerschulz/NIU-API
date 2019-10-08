@@ -5,7 +5,7 @@ class NiuApi {
     public static $token = null;
     public static $serial_no = null;
 
-    const API_BASE_URL = 'https://app-api.niu.com';
+    const API_BASE_URL = 'https://app-api-fk.niu.com';
     const ACCOUNT_BASE_URL = 'https://account.niu.com';
 
     public static function get_token($email, $password, $country_code) {
