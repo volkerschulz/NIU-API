@@ -6,7 +6,7 @@ class NiuApi {
     public static $serial_no = null;
 
     const API_BASE_URL = 'https://app-api-fk.niu.com';
-    const ACCOUNT_BASE_URL = 'https://account.niu.com';
+    const ACCOUNT_BASE_URL = 'https://account-fk.niu.com';
 
     public static function get_token($email, $password, $country_code) {
         $data = new UrlRequest(self::ACCOUNT_BASE_URL . '/appv2/login', array('account' => $email, 'countryCode' => $country_code, 'password' => $password));
